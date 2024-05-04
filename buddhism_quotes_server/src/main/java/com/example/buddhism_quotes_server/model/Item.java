@@ -19,6 +19,7 @@ public class Item {
         this.engDescription = engDescription;
     }
 
+
     public String getId() {
         return id;
     }
@@ -31,6 +32,10 @@ public class Item {
         return chiDescription;
     }
 
+    public void setChiDescription(String chiDescription) {
+        this.chiDescription = chiDescription;
+    }
+
     public String getEngDescription() {
         return engDescription;
     }
@@ -38,5 +43,4 @@ public class Item {
     public void setEngDescription(String engDescription) {
         this.engDescription = engDescription;
     }
-
 }

@@ -3,6 +3,8 @@ package com.example.buddhism_quotes_server.service;
 import com.example.buddhism_quotes_server.model.Item;
 import com.example.buddhism_quotes_server.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +24,19 @@ public class ItemService {
         return itemRepository.findById(id);
     }
 
-    public Item saveItem(Item item) {
-        return itemRepository.save(item);
+    public ResponseEntity<String> saveItem(Item item) {
+        Optional<Item> existingItem = itemRepository.findById(item.getId());
+        if (existingItem.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Item with ID " + item.getId() + " already exists");
+        } else {
+            itemRepository.save(item);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Item saved successfully");
+        }
     }
 
     public void deleteItem(String id) {
         itemRepository.deleteById(id);
     }
-
 }

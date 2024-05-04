@@ -3,7 +3,6 @@ package com.example.buddhism_quotes_server.controller;
 import com.example.buddhism_quotes_server.model.Item;
 import com.example.buddhism_quotes_server.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +28,9 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Item> createItem(@RequestBody Item item) {
-        Item createdItem = itemService.saveItem(item);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
+    public ResponseEntity<Object> createItem(@RequestBody Item item) {
+        ResponseEntity<String> responseEntity = itemService.saveItem(item);
+        return ResponseEntity.status(responseEntity.getStatusCode()).body(responseEntity.getBody());
     }
 
     @DeleteMapping("/{id}")
