@@ -28,6 +28,10 @@ public class Item {
         this.id = id;
     }
 
+    public String getName() {
+        return chiDescription + " - " + engDescription;
+    }
+
     public String getChiDescription() {
         return chiDescription;
     }
