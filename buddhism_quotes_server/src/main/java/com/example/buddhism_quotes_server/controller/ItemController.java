@@ -44,4 +44,9 @@ public class ItemController {
         itemService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/random")
+    public ResponseEntity<Item> getRandomItem() {
+        return itemService.getRandomItem();
+    }
 }

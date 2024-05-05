@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class ItemService {
@@ -27,11 +27,8 @@ public class ItemService {
 
     public ResponseEntity<String> saveItem(Item item) {
         if (item.getId() == null || item.getId().isEmpty()) {
-            System.out.println("test....");
             Optional<Item> lastItem = itemRepository.findTopByOrderByIdDesc();
             int nextId = lastItem.map(last -> Integer.parseInt(last.getId()) + 1).orElse(1);
-
-            System.out.println("Result :" + nextId);
             item.setId(String.valueOf(nextId));
         }
 
@@ -61,5 +58,16 @@ public class ItemService {
 
     public void deleteItem(String id) {
         itemRepository.deleteById(id);
+    }
+
+    public ResponseEntity<Item> getRandomItem() {
+        List<Item> allItems = itemRepository.findAll();
+        if (allItems.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Random random = new Random();
+        int randomIndex = random.nextInt(allItems.size());
+        Item randomItem = allItems.get(randomIndex);
+        return ResponseEntity.ok(randomItem);
     }
 }
